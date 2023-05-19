@@ -4,7 +4,7 @@
 ***After the requirements are installed successfully follow further steps
 2.Open xampp and start apache and mysql.To view the database click on (mysql)admin
 3.After going to the respective directory run the command "python manage.py runserver"
-4.Open google chrome and type "localhost:8000"
+4.Open google chrome and type "localhost:8000".
 
 
 
