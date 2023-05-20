@@ -1,0 +1,69 @@
+{% extends 'base.html'%}
+    {% block content%}
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+<div style="background: url('/media/bg1.jpg'); background-repeat:no-repeat;background-size:cover; color: white; height:650px; width: 100;">
+    <div class="row">
+<br> 
+  <br>
+   <h3 align="center" style="color:red;"><u>User Sign In</u></h3> <br>
+  <div class="row">
+    <div class="container" style="background:white;width:50%;">
+   
+    <form class="form-signin" action="/SignUp/" method="POST">
+                {% csrf_token %}
+    <!--div class="row">
+        <div class="col-md-6 offset-md-3">
+            <img class="card-img-top"src="/media/usericon.png" name="images" alt="Card image" style="height: 200px;width:100%;">
+        </div>
+       </div--->
+       <br>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Enter first name" name="uname">
+                <label for="floatingInput" style="color:red;">Username:</label>
+            </div>
+        </div>
+       </div>
+       <br>
+       <div class="row"> 
+        <div class="col-md-6 offset-md-3">
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Enter last name" name="pwds">
+                <label for="floatingPassword" style="color:red">Password:</label>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row"> 
+        <div class="col-md-6 offset-md-3">
+            <div class="form-floating">
+                <input type="email" class="form-control" id="floatingPassword" placeholder="Enter last name" name="eid">
+                <label for="floatingPassword" style="color:red">Email Id:</label>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+        <center><input type="submit" class="btn btn-outline-danger"value="Sign In"></center>
+        </div>
+  </div>
+<br>
+</div>
+
+    
+</div>
+<br>
+<br>
+</div>
+</div>
+<br>
+{% endblock%}

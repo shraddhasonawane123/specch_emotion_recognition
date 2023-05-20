@@ -1,0 +1,60 @@
+{% extends 'base.html'%}
+    {% block content%}
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+<div style="background: url('/media/bg1.jpg'); background-repeat:no-repeat;background-size:cover; color: white; height:650px; width: 100;">
+ <br> 
+  <br>
+<h3 align="center" style="color:blue;"><u>User Sign In</u></h3> <br>
+    <div class="row">
+<div class="container" style="background:white;width:50%;">
+   
+    <form class="form-signin" action="/SignIn/" method="POST">
+                {% csrf_token %}
+    <!--div class="row">
+        <div class="col-md-6 offset-md-3">
+            <img class="card-img-top"src="/media/usericon.png" name="images" alt="Card image" style="height: 200px;width:100%;">
+        </div>
+       </div--->
+       <br>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Enter first name" name="uname">
+                <label for="floatingInput" style="color:blue;">Username:</label>
+            </div>
+        </div>
+       </div>
+       <br>
+       <div class="row"> 
+        <div class="col-md-6 offset-md-3">
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Enter last name" name="pwds">
+                <label for="floatingPassword" style="color:blue">Password</label>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row"> 
+        <div class="col-md-6 offset-md-3">
+    <a href="/SignUp/"><u><label for="customCheck1" style="color:blue;">New User/Register</label></u></a>
+    </div>
+        </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+        <center><input type="submit" blue class="btn btn-outline-primary" value="Sign In"></center>
+        </div>
+  </div>
+<br>
+</div>
+
+	
+</div>
+<br>
+{% endblock%}

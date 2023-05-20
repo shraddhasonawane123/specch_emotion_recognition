@@ -1,0 +1,144 @@
+{% extends 'base.html'%}
+    {% block content%}
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+<style>
+input {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: hidden;
+}
+
+.no-outline:focus {
+  outline: none;
+}
+</style>
+
+<div style="background: url('/media/bg1.jpg'); background-repeat:no-repeat;background-size:cover;  height:650px; width: 100%;">
+    <br>
+    <h3 style="text-align: center;color: white;" ><mark style="color:blue;">Our Services</mark></h3>
+    <br>
+    <br>
+<div class="modal" tabindex="-1" id = "myModal" >
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Speech Emotion Recognizer</h5>
+        
+      </div>
+      <div class="modal-body">
+        <p>You are in&nbsp;<input type="text" id="reply" class = "no-outline" name="reply" value=""> </p> 
+         <p id="pic">  </p> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <div class="row">
+    <div class = "container" style="width:50%;">
+        <div class = "col-md-12">
+            <div class="row">
+                <div class="col-md-6" >
+                    <img class="card-img-top "src="/media/audio.png" id ="imgFileUpload1"name="images"  style="height: 300px;width:100%;">
+                    <span id="spnFilePath"></span>
+                    <input type="file" id="FileUpload1" style="display: none" />
+                    <script type="text/javascript">
+                        $(function () {
+                            var fileupload = $("#FileUpload1");
+                            var filePath = $("#spnFilePath");
+                            var image = $("#imgFileUpload1");
+                            image.click(function () {
+                                fileupload.click();
+                            });
+                            fileupload.change(function () {
+                                var fileName = $(this).val().split('\\')[$(this).val().split('\\').length - 1];
+                                //alert(fileName);
+                                //filePath.html("<b>Selected File: </b>" + fileName);
+                                {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: '{% url 'pred1' %}',
+                                        data: 
+                                        {    
+                                            
+                                            'text':fileName,
+                                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                        },
+                                        //dataType: 'json',
+                                        success: function (data) 
+                                        {
+                                            var reply = data["respond"];
+                                            var EMOJI = data["emo"]
+                                            document.getElementById("reply").value = reply;
+                                            document.getElementById("pic").innerHTML = EMOJI;
+                                            $('#myModal').modal('show');
+                                            //alert(reply);
+                                        }
+                                    });
+                                }
+                            });
+                        }); 
+                    </script>
+                    <br>
+                    <br>
+                    <h3><p style="color:black;text-align:center;"> Choose an audio file</p></h3>   
+                </div>
+            
+                <div class="col-md-6">
+                    <img class="card-img-top "src="/media/record1.jpg" id ="imgFileUpload2"name="images" alt="Card image" style="height: 300px;width:100%;" onclick = "imgFunc(this.id)">
+                    <script>
+                         function imgFunc(id)
+                         {
+                         var ids = id;
+                         //alert(ids);
+                         if (ids == "imgFileUpload2")
+                         {
+                           {
+                            alert('Recording is starting speak for one minute');
+                            $.ajax({
+                                type: "POST",
+                                url: '{% url 'RecordVoice' %}',
+                                data: 
+                                {
+                                    
+                                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                },
+                                //dataType: 'json',
+                                success: function (data) 
+                                {
+                                    alert('Recording completed');
+                                    var reply = data["respond"];
+                                    var EMOJI = data["emo"];
+                                    document.getElementById("reply").value = reply;
+                                    document.getElementById("pic").innerHTML = EMOJI;
+                                    $('#myModal').modal('show');
+                                }
+                            });
+                        } 
+                    }
+                         }
+                         
+              
+                    </script>
+                
+                <br>
+                <br>
+                <h3><p style="color:black;text-align:center;h"> Use real-time audio</p></h3>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<br>
+
+{% endblock %}
